@@ -2,16 +2,16 @@
 
 #include "list.h"
 
-void push_back(Node* head,int data) // add end
+void push_back(Node* head, int data) // add end
 {
-	
+
 	if (head == nullptr) head = Init(data);
 	else
 	{
 		Node* current = head;
 		while (current->next != nullptr) current = current->next;
 		current->next = Init(data);
-		current->prev = current;
+		current->next->prev = current;
 	}
 }
 
@@ -35,7 +35,18 @@ void View(Node* head) // print
 	}
 	cout << endl;
 }
-int pop_back(Node* head); // del end
+int pop_back(Node* head) // del end
+{
+	int data;
+	while (head->next != nullptr)
+	{
+		head = head->next;
+	}
+	data = head->data;
+	head->prev->next = nullptr;
+	delete head;
+	return data;
+}
 int pop_front(Node*& head) // del begin
 {
 	int data;
