@@ -55,13 +55,17 @@ int pop_front(Node*& head) // del begin
 		data = head->data;
 		Node* ptr = head;
 		head = head->next;
-		head->prev= nullptr;
+		head->prev = nullptr;
 		delete ptr;
 		return data;
 	}
-	else throw exception("Error pop_back:list is already empty!");
-
-		
+	else
+	{
+		data = head->data;
+		delete head;
+		head = nullptr;
+		return data;
+	}
 }
 int erase(Node* head, int num); // del element of "num"
 
