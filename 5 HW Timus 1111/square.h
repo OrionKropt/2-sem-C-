@@ -15,18 +15,18 @@ public:
     double GetDistance() const;
     unsigned int GetId() const;
 private:
-    Segment* sides;
+    Segment* Sides;
     double dis;
     unsigned int id;
 };
 
-Square::Square(): sides(nullptr), dis(0), id(0) {}
+Square::Square(): Sides(nullptr), dis(0), id(0) {}
 Square::Square(const Point& A, const Point& C, const unsigned int& id) {
     double x_center = (A.GetX() + C.GetX()) / 2, y_center = (A.GetY() + C.GetY()) / 2;
     Point B = Point(x_center + (C.GetY() - A.GetY())/2, y_center - (C.GetX() - A.GetX())/2);
     Point D = Point(x_center - (C.GetY() - A.GetY())/2, y_center + (C.GetX() - A.GetX())/2);
 
-    sides = new Segment[4] {
+    Sides = new Segment[4] {
         Segment(A, B),
         Segment(B, C),
         Segment(C, D),
@@ -43,7 +43,7 @@ Square::Square(double Ax, double Ay, double Cx, double Cy, const unsigned int& i
     Point B = Point(x_center + (C.GetY() - A.GetY())/2, y_center - (C.GetX() - A.GetX())/2);
     Point D = Point(x_center - (C.GetY() - A.GetY())/2, y_center + (C.GetX() - A.GetX())/2);
 
-    sides = new Segment[4] {
+    Sides = new Segment[4] {
             Segment(A, B),
             Segment(B, C),
             Segment(C, D),
@@ -53,11 +53,11 @@ Square::Square(double Ax, double Ay, double Cx, double Cy, const unsigned int& i
     this->id = id;
 }
 Square::Square(const Square& other) {
-    sides = new Segment[4] {
-        other.sides[0],
-        other.sides[1],
-        other.sides[2],
-        other.sides[3]
+    Sides = new Segment[4] {
+        other.Sides[0],
+        other.Sides[1],
+        other.Sides[2],
+        other.Sides[3]
     };
     this->dis = other.dis;
     this->id = other.id;
@@ -65,16 +65,16 @@ Square::Square(const Square& other) {
 
 void Square::DistancePointToSquare(const Point& P) {
     if (
-        Segment::Side(P, this->sides[0]) < 0 &&
-        Segment::Side(P, this->sides[1]) < 0 &&
-        Segment::Side(P, this->sides[2]) < 0 &&
-        Segment::Side(P, this->sides[3]) < 0
+        Segment::PointPositionRelativeToSegment(P, this->Sides[0]) < 0 &&
+        Segment::PointPositionRelativeToSegment(P, this->Sides[1]) < 0 &&
+        Segment::PointPositionRelativeToSegment(P, this->Sides[2]) < 0 &&
+        Segment::PointPositionRelativeToSegment(P, this->Sides[3]) < 0
        ) dis =  0;
     else dis = min(
-               min(Segment::DistancePointToSegment(P, this->sides[0]),
-                   Segment::DistancePointToSegment(P, this->sides[1])),
-               min(Segment::DistancePointToSegment(P, this->sides[2]),
-                   Segment::DistancePointToSegment(P, this->sides[3]))
+               min(Segment::DistancePointToSegment(P, this->Sides[0]),
+                   Segment::DistancePointToSegment(P, this->Sides[1])),
+               min(Segment::DistancePointToSegment(P, this->Sides[2]),
+                   Segment::DistancePointToSegment(P, this->Sides[3]))
            );
 }
 

@@ -14,7 +14,7 @@ public:
     Segment(const Segment&);
 
     static double DistancePointToSegment(const Point&, const Segment&);
-    static int Side(const Point&, const Segment&);
+    static int PointPositionRelativeToSegment(const Point&, const Segment&);
 
     Segment& operator=(const Segment&);
     bool operator==(const Segment&);
@@ -44,7 +44,7 @@ double Segment::DistancePointToSegment(const Point& P, const Segment& S) {
     return Point::Distance(P, projection);
 }
 
-int Segment::Side(const Point& P, const Segment& S) {  // 1 - left, -1 - right, 0 - on the segment
+int Segment::PointPositionRelativeToSegment(const Point& P, const Segment& S) {  // 1 - left, -1 - right, 0 - on the segment
     double res = (P.GetX() - S.A.GetX()) * (S.B.GetY() - S.A.GetY()) - (P.GetY() - S.A.GetY()) * (S.B.GetX() - S.A.GetX());
     return res == 0 ? 0 : (res < 0 ? -1 : 1);
 }
