@@ -6,7 +6,7 @@ using namespace std;
 
 
 void HoareSort(Square*&, const int&, const int&);
-void BubbleSort(Square*&, const int&);
+void ExtraCondition(Square*&, const int&);
 int main() {
     int n;
     cin >> n;
@@ -27,7 +27,7 @@ int main() {
       
    
     HoareSort(squares, 0, n - 1);
-    BubbleSort(squares, n);
+    ExtraCondition(squares, n);
     for (int i = 0; i < n; ++i)
         cout << squares[i].GetId() << ' ';
 
@@ -67,12 +67,10 @@ void HoareSort(Square*& arr, const int& left, const int& right) // O(n log(n))
 }
 
 
-void BubbleSort(Square*& arr, const int& n) {
+void ExtraCondition(Square*& arr, const int& n) {
     for (int i = 0; i < n - 1; ++i) {
-        for (int j = 0; j < n - i - 1; ++j) {
-            if (arr[j].GetDistance() > arr[j+1].GetDistance()) swap(arr[j], arr[j+1]);
-            else if (arr[j].GetDistance() == arr[j+1].GetDistance() && arr[j].GetId() > arr[j + 1].GetId()) swap(arr[j], arr[j+1]);
-        }
+        for (int j = 0; j < n - i - 1; ++j) 
+             if (arr[j].GetDistance() == arr[j+1].GetDistance() && arr[j].GetId() > arr[j + 1].GetId()) swap(arr[j], arr[j+1]);
     }
 }
 
