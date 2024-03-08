@@ -28,18 +28,18 @@ int main()
 	vector<Matrix> vec;
 	int n = 0;
 	fin >> n;
-	int size;
-	fin >> size;
-	Matrix matrix1(size), matrix2(size);
-	for (int i = 1; i <= size; i++)
-		for (int j = 1; j <= size; j++)
+	int col = 0, row = 0;
+	fin >> col >> row;
+	Matrix matrix1(col, row), matrix2(col, row);
+	for (int i = 0; i < col; i++)
+		for (int j = 0; j < row; j++)
 		{
 			int a; 
 			fin >> a;
 			matrix1.Set_ellement(i, j, a);
 		}
-	for (int i = 1; i <= size; i++)
-		for (int j = 1; j <= size; j++)
+	for (int i = 0; i < col; i++)
+		for (int j = 0; j < row; j++)
 		{
 			int a;
 			fin >> a;
@@ -70,9 +70,9 @@ int main()
 	//}
 	//vec[0].View();
 
-	cin >> matrix1;
+	/*cin >> matrix1;
 	matrix1.View();
-	cout << matrix1;
+	cout << matrix1;*/
 
 	return 0;
 }
