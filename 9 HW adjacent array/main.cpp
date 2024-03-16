@@ -30,7 +30,7 @@ public:
 private:
 	void create_a_array();
 	int count_adjacent_vertexes(const int& num_vertex);
-	int* adjacent_vertexes(const int& num_vertex, int& size);
+	//int* adjacent_vertexes(const int& num_vertex, int& size);
 	int** i_matrix;
 	int* a_array;
 	int a_size;
@@ -59,9 +59,13 @@ void Graph::read_i_matrix_form_file(const string& file_name)
 	for (int i = 0; i < i_col; ++i)
 	{
 		for (int j = 0; j < i_row; ++j)
+		{
 			fin >> i_matrix[i][j];
+			
+		}
 		a_size += count_adjacent_vertexes(i);
 	}
+	a_size += i_col;                    // starting values
 	++a_size;                           // to count form one instead of zero
 	create_a_array();
 
@@ -100,10 +104,8 @@ void Graph::print_a_array()
 }
 
 
-	//
-	// 1. Calculate adjacent edges
-	// 2. Create buffer for indexes adjacent vertexes for current vertex
-	// 3. fill in adjacent array:
+	
+	// 1. fill in adjacent array:
 	// 
 	// Graph:
 	//                                  1-----4
@@ -113,10 +115,11 @@ void Graph::print_a_array()
 	//									2---3
 	// 
 	// Incidence matrix:
-	// 1 1 1 1
-	// 1 1 1 0
 	// 1 1 1 0
 	// 1 0 0 1
+	// 0 1 0 1
+	// 0 0 1 0
+	// 
 	// 
 	// 
 	// 
@@ -141,26 +144,27 @@ void Graph::create_a_array()
 {
 	a_array = new int[a_size] {0};
 
-	int* vertexes = nullptr;
-	int size = 0;
 
-	int cur_idx = i_col;
-
-
-	for (int i = 1; i <= i_col; ++i)
+	int cur_idx = i_col + 1;
+	int idx = 0;
+	for (int i = 0; i < i_col; ++i)
 	{
-		int adj_edges = count_adjacent_vertexes(i - 1) - 1;
-		vertexes = adjacent_vertexes(i - 1, size);
-		int temp = adj_edges + cur_idx;
-		a_array[i] = cur_idx + 1;
-		for (int j = size-1; j > -1; --j)
+		a_array[i + 1] = cur_idx;
+		for (int j = 0; j < i_row; ++j)
 		{
-			a_array[cur_idx + adj_edges] = vertexes[j];
-			--adj_edges;
+			if (i_matrix[i][j])
+			{
+				for (int k = 0; k < i_col; ++k)
+				{
+					if (i_matrix[k][j] && k != i)
+					{
+						a_array[cur_idx++] = k + 1;
+					}
+				}
+			}
 		}
-		cur_idx = temp;
-		delete[] vertexes;
 	}
+
 
 }
 
@@ -172,12 +176,3 @@ int Graph::count_adjacent_vertexes(const int& num_vertex)
 	return out;
 }
 
-int* Graph::adjacent_vertexes(const int& num_vertex, int& size)
-{
-	size = count_adjacent_vertexes(num_vertex) - 1;
-	int* arr = new int[size] {0};
-	int idx = 0;
-	for (int i = 0; i < i_row; ++i)
-		if (i_matrix[num_vertex][i] && i != num_vertex) arr[idx++] = i + 1;
-	return arr;
-}
