@@ -54,3 +54,9 @@
 //
 //
 //
+#include <iostream>>
+int main
+{
+	std::cout << ___LINE__;
+	return 0;
+}
