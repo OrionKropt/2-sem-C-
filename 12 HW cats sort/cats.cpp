@@ -25,7 +25,7 @@ public:
 		out << "Weight: " << cat._weight << endl;
 		return out;
 	}
-	Cat operator=(const Cat& other)
+	Cat& operator=(const Cat& other)
 	{
 		this->_age = other._age;
 		this->_weight = other._weight;
@@ -71,6 +71,7 @@ private:
 int main()
 {
 	Cat cats[] = { Cat("Barsik", 2, 4), Cat("Arkadiy", 7, 2), Cat("Motya", 5, 1) };
+	int* arr = new int[10] { 0, 1, 4, 9, 7, 6, 5 };
 	bubble_sort(cats, 3);
 	print_arr(cats, 3);
 	return 0;
