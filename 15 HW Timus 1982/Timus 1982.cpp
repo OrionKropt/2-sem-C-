@@ -16,22 +16,22 @@ struct rib
 
 
 int n = 0, k = 0, ans = 0;
-int* el_city;
-int** prices;
-rib* ribs;
+int* el_city;                                       // города с электростанциями
+int** prices;                                       // цены проводки из города i в j
+rib* ribs;                                          // Ребра
 
-int* p;
-int* h;
+int* p;                                             // parent для DSU
+int* h;                                             // Вес множества для DSU
 
 int find(const int& v)
 {
 	return (p[v] == v) ? p[v] : find(p[v]);
 }
 
-void unit(int a,  int b, bool is_el)
+void unit(int a,  int b, bool is_el)  
 {
 	int r_a = find(a), r_b = find(b);
-	if (!is_el && r_a != r_b) ans += prices[a][b];
+	if (!is_el && r_a != r_b) ans += prices[a][b];  
 	if (h[r_a] > h[r_b])
 		swap(r_a, r_b);
 	h[r_b] = max(h[r_b], h[r_a] + 1);
@@ -40,14 +40,14 @@ void unit(int a,  int b, bool is_el)
 	
 }	
 
-void selection_sort(const int& size);
+void selection_sort(const int& size);          
 
 int main()
 {
 	cin >> n >> k;
-	el_city = new int[k+1];
-	prices = new int*[n+1];
-	ribs = new rib[(n*n - n)/2];
+	el_city = new int[k+1];                         
+	prices = new int*[n+1];                         
+	ribs = new rib[(n*n - n)/2];                    
 	for (int i = 0; i <= n; ++i)
 		prices[i] = new int[n+1];
 	for (int i = 1; i <= k; ++i)
@@ -60,19 +60,21 @@ int main()
 		for (int j = i + 1; j < n + 1; ++j)
 			ribs[t++] = rib(i, j, prices[i][j]);
 
-	selection_sort((n*n - n)/2);
+	selection_sort((n*n - n)/2);                 // Сортируем ребра по возврастанию цены
 
-	p = new int[n+1];
+	p = new int[n+1];                          
 	h = new int[n+1];
 	memset(h, 1, sizeof(int) * (n+1));
 	for (int i = 0; i <= n; ++i)
 		p[i] = i;
 
 	for (int i = 1; i < k; ++i)
-		unit(el_city[i], el_city[i + 1], true);
+		unit(el_city[i], el_city[i + 1], true);  // Объеденяем все электростанции в одно множество
+											     // Создаем сеть электростанций
 	int size = (n * n - n) / 2;
 	for (int i = 0; i < size; ++i)
-		unit(ribs[i].i, ribs[i].j, false);
+		unit(ribs[i].i, ribs[i].j, false);       // Объединяем все города в сеть с подключенным
+	                                             // электричеством 
 	cout << ans;
 
 
