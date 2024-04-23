@@ -1,3 +1,5 @@
+// 1069. Код Прюфера
+
 #include <iostream>
 #include <vector>
 

@@ -1,3 +1,5 @@
+// 1242. Оборотень
+
 #include <iostream>
 
 #include <string>
