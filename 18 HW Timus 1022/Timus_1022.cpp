@@ -64,7 +64,7 @@ private:
     int size;
     vector<vector<int>> gr;
     bool* used;
-    stack<short> res;
+    stack<int> res;
 };
 
 int main() 
